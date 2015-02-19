@@ -1,0 +1,15 @@
+.column {
+    display: inline-block;
+    width: 45%;
+    border: 1px gray solid;
+}
+
+.row {
+    float: left;
+    margin: 15px;
+}
+
+p {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
