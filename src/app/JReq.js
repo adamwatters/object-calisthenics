@@ -1,6 +1,7 @@
 var Identity = require("./Identity.js");
 var PostedJob = require("./PostedJob.js");
 var AcceptedApplication = require("./AcceptedApplication.js");
+var FailedApplication = require("./FailedApplication.js");
 
 function JReq(title, store) {
     this.identity = new Identity("job");
@@ -19,6 +20,7 @@ JReq.prototype.processApplication = function(application){
     if (application.resume) {
         return new AcceptedApplication(application, this, this.store);
     }
+    return new FailedApplication(application, this, this.store);
 };
 
 JReq.prototype.identify = function(){

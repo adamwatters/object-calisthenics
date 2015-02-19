@@ -29,7 +29,7 @@ ATS.prototype.equals = function(another){
 };
 
 module.exports = ATS;
-},{"./AcceptedApplication.js":2,"./Identity.js":5,"./PostedJob.js":8}],2:[function(require,module,exports){
+},{"./AcceptedApplication.js":2,"./Identity.js":6,"./PostedJob.js":9}],2:[function(require,module,exports){
 function AcceptedApplication(application, job, store) {
 
     this.application = application;
@@ -88,16 +88,19 @@ Employer.prototype.post = function(job){
 
 Employer.prototype.getAcceptedApplications = function(){
     var self = this;
+    var postedJobs = this.getPostedJobs();
+    //todo: this is awful - fix it
     return this.store.getForOwner('acceptedApplications', function(acceptedApplication){
-        console.log(acceptedApplication);
-        return self.equals(acceptedApplication.postedJob.employer);
+        return postedJobs.some(function(postedJob){
+            return postedJob.job.equals(acceptedApplication.job);
+        });
     });
 };
 
-Employer.prototype.filterAcceptedApplicationsByPostedJob = function(postedJob){
+Employer.prototype.getFilteredAcceptedApplications = function(job){
     var acceptedApplications = this.getAcceptedApplications();
-    acceptedApplications.filter(function(acceptedApplication){
-        return (acceptedApplication.postedJob.equals(postedJob));
+    return acceptedApplications.filter(function(acceptedApplication){
+        return (acceptedApplication.job.equals(job));
     });
 };
 
@@ -117,7 +120,20 @@ Employer.prototype.equals = function(another){
 };
 
 module.exports = Employer;
-},{"./ATS.js":1,"./Identity.js":5,"./JReq.js":6}],5:[function(require,module,exports){
+},{"./ATS.js":1,"./Identity.js":6,"./JReq.js":7}],5:[function(require,module,exports){
+function FailedApplication(application, job, store) {
+
+    this.application = application;
+    this.job = job;
+    this.date = new Date();
+
+    // todo: not sure where to put this so i can stay under 2 attribute limit 
+    this.store = store;
+    store.save('applications', this);
+}
+
+module.exports = FailedApplication;
+},{}],6:[function(require,module,exports){
 function Identity(type) {
     this.type = type;
     this.number = assignIdentityNumber(type);
@@ -148,10 +164,11 @@ var assignIdentityNumber =  function() {
     }();
 
 module.exports = Identity;
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 var Identity = require("./Identity.js");
 var PostedJob = require("./PostedJob.js");
 var AcceptedApplication = require("./AcceptedApplication.js");
+var FailedApplication = require("./FailedApplication.js");
 
 function JReq(title, store) {
     this.identity = new Identity("job");
@@ -170,6 +187,7 @@ JReq.prototype.processApplication = function(application){
     if (application.resume) {
         return new AcceptedApplication(application, this, this.store);
     }
+    return new FailedApplication(application, this, this.store);
 };
 
 JReq.prototype.identify = function(){
@@ -181,7 +199,7 @@ JReq.prototype.equals = function(another){
 };
 
 module.exports = JReq;
-},{"./AcceptedApplication.js":2,"./Identity.js":5,"./PostedJob.js":8}],7:[function(require,module,exports){
+},{"./AcceptedApplication.js":2,"./FailedApplication.js":5,"./Identity.js":6,"./PostedJob.js":9}],8:[function(require,module,exports){
 var Identity = require("./Identity.js");
 var SavedJob = require("./SavedJob.js");
 var Application = require("./Application.js");
@@ -210,7 +228,7 @@ Jobseeker.prototype.getSavedJobs = function(){
 Jobseeker.prototype.getAppliedToJobs = function(){
     var self = this;
     return this.store.getForOwner('acceptedApplications', function(acceptedApplication){
-        return self.equals(acceptedApplication.jobseeker);
+        return self.equals(acceptedApplication.application.jobseeker);
     });
 };
 
@@ -232,12 +250,12 @@ Jobseeker.prototype.equals = function(another){
 };
 
 module.exports = Jobseeker;
-},{"./Application.js":3,"./Identity.js":5,"./SavedJob.js":9}],8:[function(require,module,exports){
+},{"./Application.js":3,"./Identity.js":6,"./SavedJob.js":10}],9:[function(require,module,exports){
 function PostedJob(job, employer, store){
     this.job = job;
     this.employer = employer;
 
-    // todo: not sure where to put this so i can stay under 2 attribute limit 
+    // todo: not sure where to put this so i can stay under 2 attribute limit
     this.store = store;
     store.save('postedJobs', this);
 }
@@ -251,7 +269,7 @@ PostedJob.prototype.equals = function(another){
 };
 
 module.exports = PostedJob;
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 function SavedJob(job, jobseeker, store){
     this.job = job;
     this.jobseeker = jobseeker;
@@ -262,7 +280,7 @@ function SavedJob(job, jobseeker, store){
 }
 
 module.exports = SavedJob;
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 function Store() {
     this.employers = [];
     this.jobseekers = [];
@@ -271,6 +289,7 @@ function Store() {
     this.savedJobs = [];
     this.applications = [];
     this.acceptedApplications = [];
+    this.failedApplications = [];
     this.resumes = [];
 }
 
@@ -292,7 +311,7 @@ Store.prototype.dump = function(){
 };
 
 module.exports = Store;
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var Jobseeker = require("../app/Jobseeker.js");
 var Employer = require("../app/Employer.js");
 var Store = require("../app/Store.js");
@@ -346,15 +365,15 @@ console.log("jobSeeker can get Saved Jobs", tl.jobSeekersSavedJobs);
 tl.jobSeekersAppliedToJobs = tl.jobSeeker.getAppliedToJobs();
 console.log("jobSeeker can get Jobs they have applied to", tl.jobSeekersAppliedToJobs);
 
-tl.jobSeekersSavedJobs = tl.jobSeeker.getSavedJobs();
-console.log("employer can get Saved Jobs", tl.jobSeekersSavedJobs);
-
 tl.employerApplications = tl.employer.getAcceptedApplications();
 console.log("employer can get accepted applications", tl.employerApplications);
 
+tl.filteredEmployerApplications = tl.employer.getFilteredAcceptedApplications(tl.ats);
+console.log("employer can get accepted applications, filtered by job", tl.filteredEmployerApplications);
 
 
 
 
 
-},{"../app/Employer.js":4,"../app/Jobseeker.js":7,"../app/Store.js":10}]},{},[11]);
+
+},{"../app/Employer.js":4,"../app/Jobseeker.js":8,"../app/Store.js":11}]},{},[12]);

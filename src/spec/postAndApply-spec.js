@@ -4,6 +4,7 @@ var Store = require("../app/Store.js");
 var store = new Store();
 
 var AcceptedApplication = require("../app/AcceptedApplication");
+var FailedApplication = require("../app/FailedApplication");
 
 describe("job posting and apply process", function(){
     it("employer posts a JReq and ATS, jobseeker applies to each without and with an empty resume object", function(){
@@ -29,7 +30,7 @@ describe("job posting and apply process", function(){
 
 
         expect(app1.constructor === AcceptedApplication).toBe(true);
-        expect(app2 === undefined).toBe(true);
+        expect(app2.constructor === FailedApplication).toBe(true);
         expect(app3.constructor === AcceptedApplication).toBe(true);
         expect(app4.constructor === AcceptedApplication).toBe(true);
 

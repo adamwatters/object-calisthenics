@@ -25,16 +25,19 @@ Employer.prototype.post = function(job){
 
 Employer.prototype.getAcceptedApplications = function(){
     var self = this;
+    var postedJobs = this.getPostedJobs();
+    //todo: this is awful - fix it
     return this.store.getForOwner('acceptedApplications', function(acceptedApplication){
-        console.log(acceptedApplication);
-        return self.equals(acceptedApplication.postedJob.employer);
+        return postedJobs.some(function(postedJob){
+            return postedJob.job.equals(acceptedApplication.job);
+        });
     });
 };
 
-Employer.prototype.filterAcceptedApplicationsByPostedJob = function(postedJob){
+Employer.prototype.getFilteredAcceptedApplications = function(job){
     var acceptedApplications = this.getAcceptedApplications();
-    acceptedApplications.filter(function(acceptedApplication){
-        return (acceptedApplication.postedJob.equals(postedJob));
+    return acceptedApplications.filter(function(acceptedApplication){
+        return (acceptedApplication.job.equals(job));
     });
 };
 

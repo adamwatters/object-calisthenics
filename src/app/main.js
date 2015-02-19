@@ -51,11 +51,11 @@ console.log("jobSeeker can get Saved Jobs", tl.jobSeekersSavedJobs);
 tl.jobSeekersAppliedToJobs = tl.jobSeeker.getAppliedToJobs();
 console.log("jobSeeker can get Jobs they have applied to", tl.jobSeekersAppliedToJobs);
 
-tl.jobSeekersSavedJobs = tl.jobSeeker.getSavedJobs();
-console.log("employer can get Saved Jobs", tl.jobSeekersSavedJobs);
-
 tl.employerApplications = tl.employer.getAcceptedApplications();
 console.log("employer can get accepted applications", tl.employerApplications);
+
+tl.filteredEmployerApplications = tl.employer.getFilteredAcceptedApplications(tl.ats);
+console.log("employer can get accepted applications, filtered by job", tl.filteredEmployerApplications);
 
 
 
