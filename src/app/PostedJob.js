@@ -11,8 +11,4 @@ PostedJob.prototype.processApplication = function(application){
     return this.job.processApplication(application);
 };
 
-PostedJob.prototype.equals = function(another){
-    return this.job.equals(another.job);
-};
-
 module.exports = PostedJob;
