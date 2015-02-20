@@ -23,8 +23,33 @@ TheLadders.prototype.getApplicationsByDay = function(year, month, day){
     });
 };
 
-TheLadders.prototype.getApplicationCount = function(){
-
+TheLadders.prototype.getApplicationCountByEmployer = function(employer){
+    var applications = this.store.getWithFilter("processedApplications", function(processedApplication){
+        return processedApplication.postedJob.employer.equals(employer);
+    });
+    return applications.length;
 };
+
+TheLadders.prototype.getApplicationCountByJob = function(postedJob){
+    var applications = this.store.getWithFilter("processedApplications", function(processedApplication){
+        return processedApplication.postedJob.job.equals(postedJob.job);
+    });
+    return applications.length;
+};
+
+TheLadders.prototype.getSuccesfulApplicationCountByEmployer = function(employer){
+    var succesfulApplications = this.store.getWithFilter("processedApplications", function(processedApplication){
+        return processedApplication.postedJob.employer.equals(employer) || processedApplication.wasAccepted();
+    });
+    return applications.length;
+};
+
+TheLadders.prototype.getSuccesfulApplicationCountByJob = function(postedJob){
+    var successfulApplications = this.store.getWithFilter("processedApplications", function(processedApplication){
+        return processedApplication.postedJob.job.equals(postedJob) || processedApplication.wasAccepted();
+    });
+    return applications.length;
+};
+
 
 module.exports = TheLadders;

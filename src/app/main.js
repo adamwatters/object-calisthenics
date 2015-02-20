@@ -63,5 +63,11 @@ console.log("employer can get accepted applications, filtered by job", tl.filter
 
 tl.theLadders.report(115,1,4);
 
+console.log(tl.theLadders.getApplicationCountByEmployer(tl.employer));
+console.log(tl.theLadders.getApplicationCountByEmployer(tl.employer2));
+
+console.log(tl.theLadders.getApplicationCountByJob(tl.postedATS));
+console.log(tl.theLadders.getApplicationCountByJob(tl.postedJReq));
+
 
 

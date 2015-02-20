@@ -27,8 +27,6 @@ describe("job posting and apply process", function(){
         var app3 = jobseeker.apply(applicationWithResume, postedAts);
         var app4 = jobseeker.apply(applicationWithResume, postedJreq);
 
-
-
         expect(app1.constructor === AcceptedApplication).toBe(true);
         expect(app2.constructor === FailedApplication).toBe(true);
         expect(app3.constructor === AcceptedApplication).toBe(true);
