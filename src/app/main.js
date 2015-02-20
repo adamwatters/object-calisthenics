@@ -36,11 +36,11 @@ tl.savedJReq = tl.jobSeeker.saveJob(tl.postedJReq.job);
 //first jobseeker makes an applications with and without a resume
 tl.applicationWithoutResume = tl.jobSeeker.makeApplication();
 //todo: make a real resume object
-tl.applicationWithResume = tl.jobSeeker.makeApplication({});
+tl.applicationWithResume = tl.jobSeeker2.makeApplication({});
 
 //first job seeker applies to both of his saved jobs
-tl.jobSeeker.apply(tl.applicationWithResume, tl.postedATS); //should succeed
-tl.jobSeeker.apply(tl.applicationWithResume, tl.postedJReq); //should succeed
+tl.jobSeeker2.apply(tl.applicationWithResume, tl.postedATS); //should succeed
+tl.jobSeeker2.apply(tl.applicationWithResume, tl.postedJReq); //should succeed
 tl.jobSeeker.apply(tl.applicationWithoutResume, tl.postedATS); //should succeed
 tl.jobSeeker.apply(tl.applicationWithoutResume, tl.postedJReq); //should fail
 
@@ -61,7 +61,7 @@ console.log("employer can get accepted applications", tl.employerApplications);
 tl.filteredEmployerApplications = tl.employer.getFilteredAcceptedApplications(tl.ats);
 console.log("employer can get accepted applications, filtered by job", tl.filteredEmployerApplications);
 
-
+tl.theLadders.report(115,1,4);
 
 
 

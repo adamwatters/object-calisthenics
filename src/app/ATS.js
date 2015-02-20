@@ -11,6 +11,10 @@ function ATS(title, store) {
     store.save('jobs', this);
 }
 
+ATS.prototype.display = function(){
+    return this.title;
+};
+
 ATS.prototype.post = function(employer){
     return new PostedJob(this, employer, this.store);
 };

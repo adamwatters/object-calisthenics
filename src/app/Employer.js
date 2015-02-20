@@ -11,6 +11,10 @@ function Employer(name, store) {
     store.save('employers', this);
 }
 
+Employer.prototype.display = function(){
+    return this.name;
+};
+
 Employer.prototype.makeJReq = function(title){
     return new JReq(title, this.store);
 };

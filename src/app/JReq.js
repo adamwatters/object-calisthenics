@@ -12,6 +12,10 @@ function JReq(title, store) {
     store.save('jobs', this);
 }
 
+JReq.prototype.display = function(){
+    return this.title;
+};
+
 JReq.prototype.post = function(employer){
     return new PostedJob(this, employer, this.store);
 };

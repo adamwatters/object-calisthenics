@@ -3,17 +3,8 @@ function Identity(type) {
     this.number = assignIdentityNumber(type);
 
     // for debugging
-    console.log(this.type, this.number);
+    console.log("id", this.type, this.number);
 }
-
-// todo: are these two methods neccassary?
-Identity.prototype.isA = function(type) {
-    return this.type === type;
-};
-
-Identity.prototype.isNumber = function(number) {
-    return this.number === number;
-};
 
 Identity.prototype.equals = function(identity) {
     return this.type === identity.type && this.number === identity.number;

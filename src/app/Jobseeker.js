@@ -11,7 +11,10 @@ function Jobseeker(name, store) {
     store.save('jobseekers', this);
 }
 
-//saves a Job (not a PostedJob)
+Jobseeker.prototype.display = function(){
+    return this.name;
+};
+
 Jobseeker.prototype.saveJob = function(job){
     return new SavedJob(job, this, this.store);
 };
