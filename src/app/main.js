@@ -1,9 +1,13 @@
 var Jobseeker = require("../app/Jobseeker.js");
 var Employer = require("../app/Employer.js");
+var TheLadders = require("../app/TheLadders.js");
 var Store = require("../app/Store.js");
 var store = new Store();
 
-tl = window.theLadders = {Jobseeker: Jobseeker, Employer: Employer, store: store};
+tl = window.app = {Jobseeker: Jobseeker, Employer: Employer, TheLadders: TheLadders, store: store};
+
+//make the ladders
+tl.theLadders = new TheLadders(store);
 
 //make job seekers
 tl.jobSeeker = new Jobseeker("kevin", store);

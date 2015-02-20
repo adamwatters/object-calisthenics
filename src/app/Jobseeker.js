@@ -25,8 +25,8 @@ Jobseeker.prototype.getSavedJobs = function(){
 
 Jobseeker.prototype.getAppliedToJobs = function(){
     var self = this;
-    return this.store.getForOwner('acceptedApplications', function(acceptedApplication){
-        return self.equals(acceptedApplication.application.jobseeker);
+    return this.store.getForOwner('processedApplications', function(processedApplication){
+        return processedApplication.wasAccepted() && self.equals(processedApplication.application.jobseeker);
     });
 };
 

@@ -6,7 +6,11 @@ function FailedApplication(application, job, store) {
 
     // todo: not sure where to put this so i can stay under 2 attribute limit 
     this.store = store;
-    store.save('failedApplications', this);
+    store.save('processedApplications', this);
 }
+
+FailedApplication.prototype.wasAccepted = function(){
+    return false;
+};
 
 module.exports = FailedApplication;

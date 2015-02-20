@@ -4,7 +4,7 @@ function Resume(jobSeeker, store) {
 
     // todo: not sure where to put this so i can stay under 2 attribute limit 
     this.store = store;
-    store.save('acceptedApplications', this);
+    store.save('resumes', this);
 }
 
 Resume.prototype.process = function(job){

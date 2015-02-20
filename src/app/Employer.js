@@ -27,9 +27,9 @@ Employer.prototype.getAcceptedApplications = function(){
     var self = this;
     var postedJobs = this.getPostedJobs();
     //todo: this is awful - fix it
-    return this.store.getForOwner('acceptedApplications', function(acceptedApplication){
-        return postedJobs.some(function(postedJob){
-            return postedJob.job.equals(acceptedApplication.job);
+    return this.store.getForOwner('processedApplications', function(processedApplication){
+        return processedApplication.wasAccepted() && postedJobs.some(function(postedJob){
+            return postedJob.job.equals(processedApplication.job);
         });
     });
 };

@@ -5,8 +5,7 @@ function Store() {
     this.postedJobs = [];
     this.savedJobs = [];
     this.applications = [];
-    this.acceptedApplications = [];
-    this.failedApplications = [];
+    this.processedApplications = [];
     this.resumes = [];
 }
 
