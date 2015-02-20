@@ -15,8 +15,9 @@ ATS.prototype.post = function(employer){
     return new PostedJob(this, employer, this.store);
 };
 
-ATS.prototype.processApplication = function(application){
-    return new AcceptedApplication(application, this, this.store);
+ATS.prototype.processApplication = function(application, postedJob){
+    console.log("posted job", postedJob);
+    return new AcceptedApplication(application, postedJob, this.store);
 };
 
 ATS.prototype.identify = function(){

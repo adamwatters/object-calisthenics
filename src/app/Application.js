@@ -8,8 +8,8 @@ function Application(jobseeker, store, resume) {
     store.save('applications', this);
 }
 
-Application.prototype.apply = function(job){
-    return job.processApplication(this); 
+Application.prototype.apply = function(postedJob){
+    return postedJob.processApplication(this); 
 };
 
 module.exports = Application;

@@ -16,11 +16,11 @@ JReq.prototype.post = function(employer){
     return new PostedJob(this, employer, this.store);
 };
 
-JReq.prototype.processApplication = function(application){
+JReq.prototype.processApplication = function(application, postedJob){
     if (application.resume) {
-        return new AcceptedApplication(application, this, this.store);
+        return new AcceptedApplication(application, postedJob, this.store);
     }
-    return new FailedApplication(application, this, this.store);
+    return new FailedApplication(application, postedJob, this.store);
 };
 
 JReq.prototype.identify = function(){

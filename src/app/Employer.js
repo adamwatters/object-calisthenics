@@ -29,7 +29,7 @@ Employer.prototype.getAcceptedApplications = function(){
     //todo: this is awful - fix it
     return this.store.getWithFilter('processedApplications', function(processedApplication){
         return processedApplication.wasAccepted() && postedJobs.some(function(postedJob){
-            return postedJob.job.equals(processedApplication.job);
+            return postedJob.job.equals(processedApplication.postedJob.job);
         });
     });
 };
@@ -37,7 +37,7 @@ Employer.prototype.getAcceptedApplications = function(){
 Employer.prototype.getFilteredAcceptedApplications = function(job){
     var acceptedApplications = this.getAcceptedApplications();
     return acceptedApplications.filter(function(acceptedApplication){
-        return (acceptedApplication.job.equals(job));
+        return (acceptedApplication.postedJob.job.equals(job));
     });
 };
 

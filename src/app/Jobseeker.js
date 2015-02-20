@@ -35,8 +35,8 @@ Jobseeker.prototype.makeApplication = function(resume){
     return new Application(this, this.store, resume);
 };
 
-Jobseeker.prototype.apply = function(application, job){
-    return application.apply(job);
+Jobseeker.prototype.apply = function(application, postedJob){
+    return application.apply(postedJob);
 };
 
 Jobseeker.prototype.identify = function(){

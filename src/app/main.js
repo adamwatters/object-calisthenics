@@ -39,10 +39,10 @@ tl.applicationWithoutResume = tl.jobSeeker.makeApplication();
 tl.applicationWithResume = tl.jobSeeker.makeApplication({});
 
 //first job seeker applies to both of his saved jobs
-tl.jobSeeker.apply(tl.applicationWithResume, tl.savedATS.job); //should succeed
-tl.jobSeeker.apply(tl.applicationWithResume, tl.savedJReq.job); //should succeed
-tl.jobSeeker.apply(tl.applicationWithoutResume, tl.savedATS.job); //should succeed
-tl.jobSeeker.apply(tl.applicationWithoutResume, tl.savedJReq.job); //should fail
+tl.jobSeeker.apply(tl.applicationWithResume, tl.postedATS); //should succeed
+tl.jobSeeker.apply(tl.applicationWithResume, tl.postedJReq); //should succeed
+tl.jobSeeker.apply(tl.applicationWithoutResume, tl.postedATS); //should succeed
+tl.jobSeeker.apply(tl.applicationWithoutResume, tl.postedJReq); //should fail
 
 console.log(store);
 
