@@ -27,7 +27,7 @@ Employer.prototype.getAcceptedApplications = function(){
     var self = this;
     var postedJobs = this.getPostedJobs();
     //todo: this is awful - fix it
-    return this.store.getForOwner('processedApplications', function(processedApplication){
+    return this.store.getWithFilter('processedApplications', function(processedApplication){
         return processedApplication.wasAccepted() && postedJobs.some(function(postedJob){
             return postedJob.job.equals(processedApplication.job);
         });
@@ -43,7 +43,7 @@ Employer.prototype.getFilteredAcceptedApplications = function(job){
 
 Employer.prototype.getPostedJobs = function(){
     var self = this;
-    return this.store.getForOwner('postedJobs', function(postedJob){
+    return this.store.getWithFilter('postedJobs', function(postedJob){
         return self.equals(postedJob.employer);
     });
 };

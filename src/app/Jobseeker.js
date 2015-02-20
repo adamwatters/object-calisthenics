@@ -18,14 +18,14 @@ Jobseeker.prototype.saveJob = function(job){
 
 Jobseeker.prototype.getSavedJobs = function(){
     var self = this;
-    return this.store.getForOwner('savedJobs', function(savedJob){
+    return this.store.getWithFilter('savedJobs', function(savedJob){
         return self.equals(savedJob.jobseeker);
     });
 };
 
 Jobseeker.prototype.getAppliedToJobs = function(){
     var self = this;
-    return this.store.getForOwner('processedApplications', function(processedApplication){
+    return this.store.getWithFilter('processedApplications', function(processedApplication){
         return processedApplication.wasAccepted() && self.equals(processedApplication.application.jobseeker);
     });
 };

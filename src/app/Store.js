@@ -17,7 +17,7 @@ Store.prototype.getAll = function(type) {
     return this[type].slice();
 };
 
-Store.prototype.getForOwner = function(type, filter) {
+Store.prototype.getWithFilter = function(type, filter) {
     var unfilteredList = this.getAll(type);
     return unfilteredList.filter(filter);
 };

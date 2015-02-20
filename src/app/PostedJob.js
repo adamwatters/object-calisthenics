@@ -8,7 +8,7 @@ function PostedJob(job, employer, store){
 }
 
 PostedJob.prototype.processApplication = function(application){
-    return this.job.processApplication(application);
+    return this.job.processApplication(application, this);
 };
 
 module.exports = PostedJob;
