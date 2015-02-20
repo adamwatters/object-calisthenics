@@ -12,6 +12,4 @@ Application.prototype.apply = function(job){
     return job.processApplication(this); 
 };
 
-
-
 module.exports = Application;
